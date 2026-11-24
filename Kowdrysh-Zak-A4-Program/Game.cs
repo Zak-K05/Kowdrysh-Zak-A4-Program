@@ -9,14 +9,22 @@ namespace Game10003
     
     public class Game
     {
+        // Player
+        Vector2 playerSize = new Vector2(10, 10);
+        Vector2 playerPosition = new Vector2(450, 400);
+
+        // Platforms
         Vector2 platformSize = new Vector2(50, 10);
         Vector2[] platformPositions = { 
             new Vector2(450, 450)
         };
+        
         public void Setup()
         {
             Window.SetSize(600, 800);
             Window.TargetFPS = 60;
+
+            
         }
 
         /// <summary>
@@ -27,6 +35,13 @@ namespace Game10003
             Window.ClearBackground(Color.OffWhite);
 
             DrawPlatforms();
+            DrawPlayer();
+        }
+
+        void DrawPlayer()
+        {
+            Draw.FillColor = Color.Blue;
+            Draw.Rectangle(playerPosition, playerSize);
         }
 
         void DrawPlatforms()
