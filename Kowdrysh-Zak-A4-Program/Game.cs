@@ -1,24 +1,22 @@
 ﻿// Include code libraries you need below (use the namespace).
 using System;
 using System.Numerics;
+using System.Security.Cryptography;
 
 // The namespace your code is in.
 namespace Game10003
 {
-    /// <summary>
-    ///     Your game code goes inside this class!
-    /// </summary>
+    
     public class Game
     {
-        // Place your variables here:
-
-
-        /// <summary>
-        ///     Setup runs once before the game loop begins.
-        /// </summary>
+        Vector2 platformSize = new Vector2(50, 10);
+        Vector2[] platformPositions = { 
+            new Vector2(450, 450)
+        };
         public void Setup()
         {
-
+            Window.SetSize(600, 800);
+            Window.TargetFPS = 60;
         }
 
         /// <summary>
@@ -26,7 +24,19 @@ namespace Game10003
         /// </summary>
         public void Update()
         {
+            Window.ClearBackground(Color.OffWhite);
 
+            DrawPlatforms();
+        }
+
+        void DrawPlatforms()
+        {
+            Draw.FillColor = Color.Red;
+            
+            for (int i = 0; i < platformPositions.Length; i++)
+            {
+                Draw.Rectangle(platformPositions[i], platformSize);
+            }
         }
     }
 }
