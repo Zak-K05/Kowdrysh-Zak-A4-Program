@@ -10,8 +10,10 @@ namespace Game10003
     public class Game
     {
         // Player
-        Vector2 playerSize = new Vector2(10, 10);
         Vector2 playerPosition = new Vector2(450, 400);
+        Vector2 playerVelocity = new Vector2(0, 0);
+        int playerSize = 10;
+        float playerGravity = 0.1f;
 
         // Platforms
         Vector2 platformSize = new Vector2(50, 10);
@@ -35,14 +37,44 @@ namespace Game10003
             Window.ClearBackground(Color.OffWhite);
 
             DrawPlatforms();
-            DrawPlayer();
+            HandlePlayer();
         }
 
-        void DrawPlayer()
+        void HandlePlayer()
         {
+            HandleInput();
+
+            // Platform collision detection
+            for (int i = 0; i < platformPositions.Length; i++) 
+            { 
+                if (playerPosition.X >= platformPositions[i].X &&
+                    playerPosition.X <= platformPositions[i].X + platformPositions[i].X &&
+                    playerPosition.Y <= platformPositions[i].Y &&
+                    playerPosition.Y + playerSize >= platformPositions[i].Y)
+                {
+                    playerVelocity = new Vector2(0, 0);
+                    playerPosition = new Vector2(playerPosition.X, platformPositions[i].Y - playerSize);
+                }
+                else
+                {
+                    playerVelocity = new Vector2(playerVelocity.X, playerVelocity.Y + playerGravity);
+                }
+            }
+            
+            // Update position based on velocity
+            playerPosition = playerPosition + playerVelocity;
+            
+            // Draw player at position
             Draw.FillColor = Color.Blue;
-            Draw.Rectangle(playerPosition, playerSize);
+            Draw.Circle(playerPosition, playerSize);
         }
+
+
+        void HandleInput()
+        {
+
+        }
+
 
         void DrawPlatforms()
         {
